@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "36853561391",
+    "firebase_url": "https://taxximagangue.firebaseio.com",
+    "project_id": "taxximagangue",
+    "storage_bucket": "taxximagangue.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36853561391:android:b454c297f1dfcae28d6eda",
+        "android_client_info": {
+          "package_name": "com.example.taximagangue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36853561391-a9csei03foei4kgaqvv6gisc96bvp0jr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.taximagangue",
+            "certificate_hash": "a1e291ac817482d2c0b298a013ecb59bf3ad9bba"
+          }
+        },
+        {
+          "client_id": "36853561391-bgmanmldceu8e8vvuqe72ig5beeeusjq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4qAAcHb6rdL53SczVl5Wxgv6oJQIiHHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36853561391-bgmanmldceu8e8vvuqe72ig5beeeusjq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
