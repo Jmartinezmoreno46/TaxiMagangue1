@@ -1,4 +1,4 @@
-package com.example.taximagangue;
+package com.example.taximagangue.Actividades;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.taximagangue.R;
+import com.example.taximagangue.includes.MyToolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -17,11 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
-
     TextInputEditText eTextImputEmail;
     TextInputEditText eTextImputContra;
     Button btnIngresar;
-
     FirebaseAuth tAuth;
     DatabaseReference tDatabase;
 
@@ -29,11 +29,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // agragando el toolbar en la actividad .
+        MyToolbar.show(this, "Login de Usuario",true);
 
         eTextImputEmail = (TextInputEditText)findViewById(R.id.EditEmail);
         eTextImputContra =(TextInputEditText)findViewById(R.id.Editpassword);
         btnIngresar = (Button)findViewById(R.id.btnGotoLogin);
-
         tAuth = FirebaseAuth.getInstance();
         tDatabase = FirebaseDatabase.getInstance().getReference();
 

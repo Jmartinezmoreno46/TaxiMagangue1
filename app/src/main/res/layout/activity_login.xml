@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="#F3ECAE"
-    tools:context=".LoginActivity">
+    tools:context=".Actividades.LoginActivity">
+
+    <include layout="@layout/action_bar_toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"

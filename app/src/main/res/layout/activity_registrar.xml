@@ -5,27 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F3ECAE"
-    tools:context=".RegistrarActivity">
+    tools:context=".Actividades.Clientes.RegistrarActivity">
+
+    <include layout="@layout/action_bar_toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.appBarLayout$ScrollingViewBehavior"
         >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Registro"
-            android:textSize="35sp"
-            android:layout_marginTop="20dp"
-            android:textAlignment="center"
-            android:layout_gravity="center_horizontal"
-            ></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="80dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -45,6 +38,7 @@
                 android:layout_marginLeft="20dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/EditNombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -79,8 +73,11 @@
             android:layout_marginLeft="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
                 android:hint="Correo Electronico"
                 android:inputType="textEmailAddress"
                 android:textColor="#000"/>
@@ -109,8 +106,11 @@
             android:layout_marginLeft="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
                 android:hint="Contraseña"
                 android:inputType="textPassword"
                 android:textColor="#000"/>
@@ -137,8 +137,11 @@
                 android:layout_marginLeft="20dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/EditTelefono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
                     android:hint="Telefono"
                     android:inputType="number"
                     android:textColor="#000"/>
@@ -153,6 +156,7 @@
             >
 
             <Button
+                android:id="@+id/btnRegistrar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F3ECAE"
-    tools:context=".OptionAuthActivity">
+    tools:context=".Actividades.OptionAuthActivity">
 
     <include layout="@layout/action_bar_toolbar" />
 
@@ -71,7 +71,7 @@
                 android:layout_marginRight="15dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="@color/colorPrimary"
-                android:text="Registrarme"
+                android:text="Registrarme Ahora"
                 android:textColor="#FFF" />
 
         </LinearLayout>
