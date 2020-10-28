@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.taximagangue.Actividades.Clientes.MapClienteActivity;
+import com.example.taximagangue.Actividades.Conductores.MapConductoresActivity;
 import com.example.taximagangue.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class InicioActivity extends AppCompatActivity {
     Button btnCliente;
@@ -44,6 +47,23 @@ public class InicioActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            String user = tPref.getString("user", "");
+                if (user.equals("client")){
+                    Intent intent = new Intent(InicioActivity.this, MapClienteActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(InicioActivity.this, MapConductoresActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            }
+        }
 
     private void gotoSelectAuth() {
         Intent intent = new Intent(InicioActivity.this, OptionAuthActivity.class);

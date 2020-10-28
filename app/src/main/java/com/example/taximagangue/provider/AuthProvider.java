@@ -21,4 +21,8 @@ public class AuthProvider {
     }
 
 
+    public void logout(){
+        tAuth.signOut();
+    }
+
 }

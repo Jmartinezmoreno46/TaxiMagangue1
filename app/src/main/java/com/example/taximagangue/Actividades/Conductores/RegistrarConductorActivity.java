@@ -2,15 +2,15 @@ package com.example.taximagangue.Actividades.Conductores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.taximagangue.Actividades.Clientes.RegistrarActivity;
 import com.example.taximagangue.R;
 import com.example.taximagangue.includes.MyToolbar;
-import com.example.taximagangue.models.Client;
 import com.example.taximagangue.models.Conduct;
 import com.example.taximagangue.provider.AuthProvider;
 import com.example.taximagangue.provider.ConductorProvider;
@@ -75,7 +75,6 @@ public class RegistrarConductorActivity extends AppCompatActivity {
         }
 
     }
-
     void register(final String name, final String email, String pass , final String marca, final String placa){
         tAuthProvider.Registrar(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -96,7 +95,10 @@ public class RegistrarConductorActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(RegistrarConductorActivity.this, "El Registro Se Realizo Exitoso", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RegistrarConductorActivity.this, "El Registro Se Realizo Exitoso", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegistrarConductorActivity.this, MapConductoresActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }else{
                     Toast.makeText(RegistrarConductorActivity.this, "No Se Pudo Registrar El Conductor", Toast.LENGTH_SHORT).show();
                 }
