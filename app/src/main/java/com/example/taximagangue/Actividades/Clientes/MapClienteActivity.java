@@ -20,6 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.taximagangue.provider.GeoFireProvider;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -29,12 +32,19 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.example.taximagangue.R;
 import com.example.taximagangue.Actividades.InicioActivity;
 import com.example.taximagangue.includes.MyToolbar;
 import com.example.taximagangue.provider.AuthProvider;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseError;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.DialogInterface.*;
 
@@ -43,18 +53,31 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
     private GoogleMap tMap;
     private SupportMapFragment tMapFragment;
     private AuthProvider tAuthProvider;
-
+    private GeoFireProvider tGeoFireProvider;
+    private LatLng tCurrentLatLng;
     private LocationRequest tLocationRequest;
     private FusedLocationProviderClient tFusedLocation;
-
+    private Marker tMarker;
     private final static int LOCATION_REQUEST_CODE = 1;
     private final static int SETTINGS_REQUEST_CODE = 2;
+    private List<Marker> tMarcarConductor = new ArrayList<>();
+    private boolean tFirsTime = true;
 
     LocationCallback tLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             for (Location location : locationResult.getLocations()) {
                 if (getApplicationContext() != null) {
+                    if (tMarker != null){
+                        tMarker.remove();
+                    }
+
+                    tCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    tMarker = tMap.addMarker(new MarkerOptions().position(
+                            new LatLng(location.getLatitude(), location.getLongitude())
+                            ).title("Tu Posicion")
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location))
+                    );
                     // OBTENER LA LOCALIZACION DEL USUARIO EN TIEMPO REAL
                     tMap.moveCamera(CameraUpdateFactory.newCameraPosition(
                             new CameraPosition.Builder()
@@ -62,6 +85,10 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
                                     .zoom(15f)
                                     .build()
                     ));
+                    if (tFirsTime){
+                        tFirsTime=false;
+                        getActivarConductor();
+                    }
                 }
             }
         }
@@ -74,12 +101,14 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
         MyToolbar.show(this, "Cliente", false);
 
         tAuthProvider = new AuthProvider();
-
+        tGeoFireProvider = new GeoFireProvider();
         tFusedLocation = LocationServices.getFusedLocationProviderClient(this);
 
         tMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         tMapFragment.getMapAsync(this);
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -172,6 +201,65 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
                 showAlertDialogNOGPS();
             }
         }
+    }
+
+    private void getActivarConductor(){
+        tGeoFireProvider.getActivarConductor(tCurrentLatLng).addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                // añadiremos los marcadores de los conductores que se conecten a la aplicacion
+                for (Marker marker : tMarcarConductor){
+                    if (marker.getTag() != null){
+                        if (marker.getTag().equals(key)){
+                            return;
+                        }
+                    }
+                }
+                LatLng ConductorLatLng = new LatLng(location.latitude,location.longitude);
+                Marker marker = tMap.addMarker(new MarkerOptions().position(ConductorLatLng).title("Conductor Disponible").icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi)));
+                marker.setTag(key);
+                tMarcarConductor.add(marker);
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+                for (Marker marker : tMarcarConductor){
+                    if (marker.getTag() != null){
+                        if (marker.getTag().equals(key)){
+                            marker.remove();
+                            tMarcarConductor.remove(marker);
+                            return;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+                //actualizar la posicion del conductor
+
+                for (Marker marker : tMarcarConductor){
+                    if (marker.getTag() != null){
+                        if (marker.getTag().equals(key)){
+                            marker.setPosition(new LatLng(location.latitude,location.longitude));
+                            return;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+
+            }
+        });
     }
 
     private void checkLocationPermissions() {

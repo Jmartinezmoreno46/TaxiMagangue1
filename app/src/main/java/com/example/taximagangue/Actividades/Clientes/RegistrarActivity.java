@@ -3,6 +3,7 @@ package com.example.taximagangue.Actividades.Clientes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,11 +24,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import dmax.dialog.SpotsDialog;
+
 public class RegistrarActivity extends AppCompatActivity {
     AuthProvider tAuthProvider;
     ClientProvider tClient;
     Button btn_Registrar;
     TextInputEditText text_Email, text_Nombre, text_telefono, text_Pass;
+    AlertDialog tDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,7 @@ public class RegistrarActivity extends AppCompatActivity {
 
         tAuthProvider = new AuthProvider();
         tClient = new ClientProvider();
-
+        tDialog = new SpotsDialog.Builder().setContext(RegistrarActivity.this).setMessage("Espere un momento").build();
 
         btn_Registrar = (Button)findViewById(R.id.btnRegistrar);
         text_Nombre =(TextInputEditText)findViewById(R.id.EditNombre);
@@ -62,6 +66,7 @@ public class RegistrarActivity extends AppCompatActivity {
 
         if(!name.isEmpty() && !email.isEmpty() && !pass.isEmpty() && !telefono.isEmpty()){
             if (pass.length() >= 6){
+                tDialog.show();
                 //este metodo recibe un email y password
                 register(name, email, pass);
             }else{

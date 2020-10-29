@@ -25,4 +25,14 @@ public class AuthProvider {
         tAuth.signOut();
     }
 
+    public  String getId(){
+        return tAuth.getCurrentUser().getUid();
+    }
+    public  boolean existSesion(){
+        boolean exist = false;
+        if (tAuth.getCurrentUser() != null){
+            exist = true;
+        }
+        return  exist;
+    }
 }

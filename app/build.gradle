@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.4.0'
 
     //libarias utilizadas faribase
+    implementation 'com.firebase:geofire-android:2.0.0'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'

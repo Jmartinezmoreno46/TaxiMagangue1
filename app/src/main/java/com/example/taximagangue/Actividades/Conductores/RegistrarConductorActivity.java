@@ -3,12 +3,14 @@ package com.example.taximagangue.Actividades.Conductores;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.taximagangue.Actividades.LoginActivity;
 import com.example.taximagangue.R;
 import com.example.taximagangue.includes.MyToolbar;
 import com.example.taximagangue.models.Conduct;
@@ -20,11 +22,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import dmax.dialog.SpotsDialog;
+
 public class RegistrarConductorActivity extends AppCompatActivity {
     AuthProvider tAuthProvider;
     ConductorProvider tConduct;
     Button btn_Registrar;
     TextInputEditText text_Email, text_Nombre, text_telefono, text_Pass , text_Marca_Vehiculo, text_Placa_Vehiculo;
+    AlertDialog tDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +37,9 @@ public class RegistrarConductorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registrar_conductor);
 
         MyToolbar.show(this, "Registro de Conductor",true);
-
+        tDialog = new SpotsDialog.Builder().setContext(RegistrarConductorActivity.this).setMessage("Espere un momento").build();
         tAuthProvider = new AuthProvider();
         tConduct = new ConductorProvider();
-
-
 
         btn_Registrar = (Button)findViewById(R.id.btnRegistrar);
         text_Nombre =(TextInputEditText)findViewById(R.id.EditNombre);
@@ -65,6 +68,7 @@ public class RegistrarConductorActivity extends AppCompatActivity {
 
         if(!name.isEmpty() && !email.isEmpty() && !pass.isEmpty() && !telefono.isEmpty() && !marca.isEmpty() && !placa.isEmpty()){
             if (pass.length() >= 6){
+                tDialog.show();
                 //este metodo recibe un email y password
                 register(name, email, pass , marca ,placa);
             }else{
