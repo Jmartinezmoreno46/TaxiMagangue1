@@ -68,10 +68,10 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
         public void onLocationResult(LocationResult locationResult) {
             for (Location location : locationResult.getLocations()) {
                 if (getApplicationContext() != null) {
+
                     if (tMarker != null){
                         tMarker.remove();
                     }
-
                     tCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                     tMarker = tMap.addMarker(new MarkerOptions().position(
                             new LatLng(location.getLatitude(), location.getLongitude())
@@ -87,7 +87,7 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
                     ));
                     if (tFirsTime){
                         tFirsTime=false;
-                        getActivarConductor();
+                        getActivarConductores();
                     }
                 }
             }
@@ -97,7 +97,7 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_conductores);
+        setContentView(R.layout.activity_map_cliente);
         MyToolbar.show(this, "Cliente", false);
 
         tAuthProvider = new AuthProvider();
@@ -203,7 +203,7 @@ public class MapClienteActivity extends AppCompatActivity implements OnMapReadyC
         }
     }
 
-    private void getActivarConductor(){
+    private void getActivarConductores(){
         tGeoFireProvider.getActivarConductor(tCurrentLatLng).addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {

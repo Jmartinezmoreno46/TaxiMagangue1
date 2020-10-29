@@ -71,6 +71,7 @@ public class MapConductoresActivity extends AppCompatActivity implements OnMapRe
                 if (getApplicationContext() != null) {
 
                     tCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
                     if (tMarker != null) {
                         tMarker.remove();
                     }
@@ -87,6 +88,7 @@ public class MapConductoresActivity extends AppCompatActivity implements OnMapRe
                                     .zoom(15f)
                                     .build()
                     ));
+
                     updateLocation();
                 }
             }
@@ -132,7 +134,6 @@ public class MapConductoresActivity extends AppCompatActivity implements OnMapRe
         tMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         tMap.getUiSettings().setZoomControlsEnabled(true);
 
-
         tLocationRequest = new LocationRequest();
         tLocationRequest.setInterval(1000);
         tLocationRequest.setFastestInterval(1000);
@@ -150,9 +151,6 @@ public class MapConductoresActivity extends AppCompatActivity implements OnMapRe
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     if (gpsActived()) {
                         tFusedLocation.requestLocationUpdates(tLocationRequest, tLocationCallback, Looper.myLooper());
-                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            return;
-                        }
                         tMap.setMyLocationEnabled(true);
                     } else {
                         showAlertDialogNOGPS();
@@ -174,9 +172,6 @@ public class MapConductoresActivity extends AppCompatActivity implements OnMapRe
                 return;
             } else {
                 tFusedLocation.requestLocationUpdates(tLocationRequest, tLocationCallback, Looper.myLooper());
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
                 tMap.setMyLocationEnabled(true);
             }
         }
@@ -204,7 +199,8 @@ public class MapConductoresActivity extends AppCompatActivity implements OnMapRe
             if (tAuthProvider.existSesion()){
                 tGeoFireProvider.removeLocation(tAuthProvider.getId());
             }
-        }else {
+        }
+        else {
             Toast.makeText(MapConductoresActivity.this , "No Te Puedes Desconectar", Toast.LENGTH_SHORT).show();
         }
 
@@ -217,9 +213,6 @@ public class MapConductoresActivity extends AppCompatActivity implements OnMapRe
                     btnConexion.setText("Desconectarse");
                     tIsConect = true;
                     tFusedLocation.requestLocationUpdates(tLocationRequest, tLocationCallback, Looper.myLooper());
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        return;
-                    }
                     tMap.setMyLocationEnabled(true);
                 }
                 else {
@@ -232,9 +225,6 @@ public class MapConductoresActivity extends AppCompatActivity implements OnMapRe
         }else {
             if (gpsActived()) {
                 tFusedLocation.requestLocationUpdates(tLocationRequest, tLocationCallback, Looper.myLooper());
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
                 tMap.setMyLocationEnabled(true);
             }
             else {

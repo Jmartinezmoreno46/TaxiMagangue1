@@ -21,8 +21,10 @@ public class GeoFireProvider {
     }
 
     public  void removeLocation(String idConductor){
+
         tGeofire.removeLocation(idConductor);
     }
+
     public GeoQuery getActivarConductor(LatLng latLng){
         GeoQuery geoQuery = tGeofire.queryAtLocation(new GeoLocation(latLng.latitude,latLng.longitude), 5);
         geoQuery.removeAllListeners();
